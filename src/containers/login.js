@@ -2,19 +2,22 @@ import React, { Component } from "react"
 import PropTypes from "prop-types"
 import { compose } from "redux"
 import { connect } from "react-redux"
-import { Field, reduxForm } from "redux-form"
-import { Row, Col, Button, Form } from "react-bootstrap"
+import { reduxForm } from "redux-form"
+import { Form } from "react-bootstrap"
+import { Link } from "react-router-dom"
 import { withRouter } from "react-router"
-import { isValidEmail, isRequired } from "../helpers"
-import {InputField} from "../components/formItems"
 import ErrorAlert from "../components/errorAlert"
 import { login } from "../actions/api"
+import "./sign.css"
+import { MainButton, MainContainer, MainHeader, MainWidget } from "../components/MainComponents"
 
 class Login extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      errors: []
+      errors: [],
+      email: '',
+      password: '',
     }
   }
 
@@ -24,12 +27,27 @@ class Login extends Component {
     history: PropTypes.object
   };
 
-  submit = (values) => {
-    const { history, login } = this.props
+  handleEmailChange = (e) => {
+    this.setState({email: e.target.value});
+  }
+
+  handlePasswordChange = (e) => {
+    this.setState({password: e.target.value});
+  }
+
+  submit = () => {
+    const { history, login } = this.props;
+    const { email, password } = this.state;
+    const values = {
+      email: email,
+      password: password
+    }
+
+    console.log("+++++", values);
     return login(values).then( res => {
         history.push('/users')
     }).catch(res => {
-      this.setState({errors: res.errors} )
+      this.setState({errors: ["Wrong email or password"] })
     })
   }
 
@@ -38,37 +56,43 @@ class Login extends Component {
     const { errors } = this.state
 
     return (
-      <div>
-        <h2 className="text-center">Welcome</h2>
-        <Row>
-          <Col xs={4} xsOffset={4}>
-            <Form onSubmit={handleSubmit(this.submit)}>
-              <Field
-                name="email"
-                label="Email"
-                type="text"
-                placeholder="Email"
-                validate={[isRequired, isValidEmail]}
-                component={InputField}
-              />
-              <Field
-                name="password"
-                label="Password"
-                type="password"
-                placeholder="Password"
-                validate={isRequired}
-                component={InputField}
-              />
-              <div className="text-center">
-                <Button type="submit">Log In</Button>
-                <Button onClick={()=>{ history.push('/register')} }>Sign Up</Button>
-              </div>
-            </Form>
-            <br />
-            {errors && (<ErrorAlert errors={errors} /> )}
-          </Col>
-        </Row>
-      </div>
+      <MainContainer>
+        <MainWidget>
+        <Form onSubmit={handleSubmit(this.submit)}>
+          <MainHeader>
+            Log In
+          </MainHeader>
+          <div className="InputContainerL">
+            <label>Must be a valid email address</label>
+            <input 
+            className="InputField" 
+            placeholder="EmailAddress"
+            value={this.state.email}
+            onChange={this.handleEmailChange}
+            type="text"
+            name="email"/>
+          </div>
+          <div className="InputContainerL">
+            <input 
+            className="InputField" 
+            placeholder="Password"
+            value={this.state.password}
+            onChange={this.handlePasswordChange}
+            type="password"
+            name="password"/>
+          </div>
+          <div className="text-center">
+            <MainButton type="submit">LOG IN</MainButton>
+          </div>
+          <div className="TextLink">
+            <a href='/login'>FORGOT PASSWORD</a>|
+            <a href='/register'>SIGN UP</a>
+          </div>
+        </Form>
+        <br />
+        {errors && (<ErrorAlert errors={errors} /> )}
+        </MainWidget>
+      </MainContainer>
     )
   }
 }

@@ -4,10 +4,8 @@ import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { getUsers } from '../actions/api'
-import { Table, Row, Col } from 'react-bootstrap'
+import { Table, Row, Col, Alert } from 'react-bootstrap'
 import { orderBy } from 'lodash'
-
-import ErrorAlert from '../components/errorAlert'
 
 class Users extends Component {
 
@@ -25,13 +23,11 @@ class Users extends Component {
   };
 
   componentWillMount() {
-    const { getUsers, usersData } = this.props
+    const { getUsers } = this.props
     getUsers()
-    console.log( usersData )
   }
 
-  sortUser = (column) => {
-    
+  sortUser = () => {    
     const { sortOrder } = this.state;
     this.setState({sortOrder: 1 - sortOrder});
   }
@@ -39,8 +35,9 @@ class Users extends Component {
 
   render() {
     const { usersData } = this.props
-    const userData = orderBy( usersData, ["created_at"], [this.state.sortOrder ? 'asc' : 'desc'])
-    console.log( "herer", userData )
+    const { sortOrder } = this.state
+    const userData = orderBy( usersData, ["created_at"], [sortOrder ? 'asc' : 'desc'])
+    const createdAtTitle = "Created At" + (sortOrder ? "\u2193" : '\u2191')
     const {errors} = this.state
     return (
       <div>
@@ -52,7 +49,7 @@ class Users extends Component {
               <thead>
                 <tr>
                   <th>Email</th>
-                  <th onClick={() => this.sortUser(2)}>Created_at</th>
+                  <th onClick={() => this.sortUser(2)} ><span>{createdAtTitle}</span></th>
                 </tr>
               </thead>
               <tbody>
@@ -64,7 +61,7 @@ class Users extends Component {
                 ))}
               </tbody>
             </Table>
-            {errors && <ErrorAlert errors={errors} />}
+            {errors && <Alert>{errors}</Alert>}
           </Col>
         </Row>
       </div>
@@ -77,7 +74,7 @@ const mapDispatchToProps = {
 }
 
 const mapStateToProps = (state) => ({
-  usersData: state.entities.users_data
+  usersData: state.entities.usersData
 })
 
 export default compose(

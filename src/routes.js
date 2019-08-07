@@ -9,12 +9,12 @@ import Users from './containers/users'
 
 export default (
   <Router>
-  <div style={{ height: '100%' }}>
+  <div>
   <Header />
   <Switch>
   <Route path="/login" component={Login} />
   <Route path="/register" component={Signup} />
-  <Route path="/users" component={Users} />
+  <Route path="/" component={Users} />
   </Switch>
   </div>
   </Router>

@@ -3,9 +3,8 @@ import PropTypes from "prop-types"
 import { connect } from "react-redux"
 import { withRouter } from 'react-router'
 import { Link } from "react-router-dom"
-import { Grid, Navbar, Nav, NavItem } from "react-bootstrap"
-import { LinkContainer, IndexLinkContainer } from 'react-router-bootstrap'
-
+import { Navbar, Nav, NavItem } from "react-bootstrap"
+import { LinkContainer } from 'react-router-bootstrap'
 import { logout } from "../actions/api"
 
 class Header extends React.Component {
@@ -38,8 +37,8 @@ class Header extends React.Component {
   renderNonUserButtons() {
     return (
       <Nav pullRight>
-        <LinkContainer to="/login"><NavItem>Log In</NavItem></LinkContainer> 
-        <LinkContainer to="/register"><NavItem>Register</NavItem></LinkContainer> 
+          <LinkContainer className="HeaderItem" to="/login"><NavItem>Log In</NavItem></LinkContainer> 
+          <LinkContainer to="/register"><NavItem>Register</NavItem></LinkContainer> 
       </Nav>
     )
   }
@@ -47,7 +46,9 @@ class Header extends React.Component {
     const { user } = this.props
     return (
       <div>
-        <Navbar collapseOnSelect fluid>
+        <Navbar collapseOnSelect fluid
+        style={{ backgroundColor: 'transparent',
+        border: 'none' }}>
           <Navbar.Header>
             <Navbar.Brand>
               <Link to="/">User Management</Link>

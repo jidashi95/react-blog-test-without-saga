@@ -2,20 +2,25 @@ import React, { Component } from "react"
 import PropTypes from "prop-types"
 import { compose } from "redux"
 import { connect } from "react-redux"
-import { Field, reduxForm, SubmissionError } from "redux-form"
-import { Row, Col, Button, Form } from "react-bootstrap"
+import { reduxForm } from "redux-form"
+import { Link } from "react-router-dom"
+import { Form } from "react-bootstrap"
 import { withRouter } from "react-router"
 import { isValidEmail, isRequired } from "../helpers"
-import {InputField} from "../components/formItems"
 import ErrorAlert from "../components/errorAlert"
-import { signup, login } from "../actions/api"
-
+import { signup } from "../actions/api"
+import "./sign.css"
+import { MainContainer, MainButton, MainHeader, MainWidget } from "../components/MainComponents"
 
 class Signup extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      errors: []
+      errors: [],
+      email: '',
+      password: '',
+      password_confirm: '',
+      termFlag: false,
     }
   }
 
@@ -25,15 +30,46 @@ class Signup extends Component {
     history: PropTypes.object
   };
 
-  submit = (values) => {
+  submit = () => {
+    const { email, password, password_confirm, termFlag } = this.state;
+    if( termFlag === false ) {
+      alert("Please agree our terms and policy.");
+      return;
+    }
+
+    if( password !== password_confirm ) {
+      alert("Password and Confirm must be the same.")
+      return;
+    }
+
+    const values = {
+      email: email,
+      password: password,
+    }
+
     const { history, signup } = this.props
-    console.log( "here", values )
     return signup(values).then(res => {
       history.push('/login')
     }).catch( res => {
-      this.setState({errors: res.errors.full_messages})
-      throw new SubmissionError(res.errors)
+      this.setState({errors: ["Existing User"]})
     })
+  }
+
+  handleEmailChange = (e) => {
+    this.setState({email: e.target.value});
+  }
+
+  handlePasswordChange = (e) => {
+    this.setState({password: e.target.value});
+  }
+
+  handlePassConfirmChange = (e) => {
+    this.setState({password_confirm: e.target.value});
+  }
+  
+  handleTermFlagChange = () => {
+    const { termFlag } = this.state;
+    this.setState({termFlag: !termFlag});
   }
 
   render() {
@@ -41,43 +77,55 @@ class Signup extends Component {
     const { errors } = this.state
 
     return (
-      <div>
-        <h2 className="text-center">Create an account</h2>
-        <Row>
-          <Col xs={4} xsOffset={4}>
-            <Form onSubmit={handleSubmit(this.submit)}>
-              <Field
-                name="email"
-                label="Email"
-                type="text"
-                placeholder="Email"
-                validate={[isRequired, isValidEmail]}
-                component={InputField}
-              />
-              <Field
-                name="password"
-                label="Password"
-                type="password"
-                placeholder="Password"
-                validate={isRequired}
-                component={InputField}
-              />
-              <Field
-                name="password_confirm"
-                label="Confirm Password"
-                type="password"
-                placeholder="Confirm Password"
-                component={InputField}
-              />
-              <div className="text-center">
-                <Button type="submit" disabled={submitting}>Register</Button>
-              </div>
-            </Form>
-            <br />
-            {errors && (<ErrorAlert errors={errors} /> )}
-          </Col>
-        </Row>
-      </div>
+      <MainContainer>
+        <MainWidget>
+          <Form onSubmit={handleSubmit(this.submit)}>
+            <MainHeader>
+              Sign Up
+            </MainHeader>
+            <div className="InputContainerS">
+              <input 
+              className="InputField" 
+              name="email" 
+              value={this.state.email}
+              onChange={this.handleEmailChange}
+              placeholder="EmailAddress"/>
+            </div>
+            <div className="InputContainerS">
+              <input 
+              className="InputField" 
+              name="password"
+              type="password"
+              value={this.state.password}
+              onChange={this.handlePasswordChange}
+              placeholder="Password"/>
+            </div>
+            <div className="InputContainerS">
+              <input 
+              className="InputField" 
+              type="password"
+              placeholder="Confirm Password"
+              name="password_confirm"
+              value={this.state.password_confirm}
+              onChange={this.handlePassConfirmChange}/>
+            </div>
+
+            <div className="InputContainerS">
+              <input type="checkbox"
+              onChange={this.handleTermFlagChange}/>
+              <span>I agree to the Terms & Conditions</span>
+            </div>
+            <div className="text-center">
+              <MainButton type="submit" disabled={submitting}>SIGN UP</MainButton>
+            </div>
+            <div className="text-center" style={{fontSize:'10px'}}>
+              <Link style={{color: 'grey'}} to='/login'>LOG IN</Link>
+            </div>
+          </Form>
+          <br />
+          {errors && (<ErrorAlert errors={errors} /> )}
+        </MainWidget>
+      </MainContainer>
     )
   }
 }

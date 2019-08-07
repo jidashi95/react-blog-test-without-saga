@@ -4,10 +4,10 @@ import { routerMiddleware } from 'react-router-redux'
 import thunk from 'redux-thunk'
 import api from '../middleware/api'
 import auth from '../middleware/auth'
-import createHistory from 'history/createBrowserHistory'
+import {createBrowserHistory} from 'history'
 import rootReducer from '../reducers'
 
-export const history = createHistory()
+export const history = createBrowserHistory()
 
 const configureStore = preloadedState => {
     const store = createStore(
