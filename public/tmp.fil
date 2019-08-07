@@ -1,0 +1,17 @@
+QA Test, Client
+
+Route mismatch for users page
+Error handling for register and login user
+Column name incorrect spelling
+
+Technical review
+
+Incosistent letter case 
+
+
+const MainContainer = styled.div`
+background-image: url('/logo.jpg');
+min-height: 100vh;
+margin-top: -72px;
+padding-top: 72px;
+`;

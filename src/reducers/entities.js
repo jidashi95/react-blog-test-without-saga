@@ -13,9 +13,9 @@ const entities = (state = {}, action) => {
     }
     
     if (action.path && action.method && action.status === 'COMPLETE') {
+        
         switch (action.type) {
             case types.LOG_IN:
-            case types.SIGN_UP:
                 return {
                     ...state,
                     user: action.response.data
@@ -28,7 +28,7 @@ const entities = (state = {}, action) => {
             case types.GET_USERS:
                 return {
                     ...state,
-                    users_data: action.response
+                    usersData: action.response
                 }
             default:
               return state
