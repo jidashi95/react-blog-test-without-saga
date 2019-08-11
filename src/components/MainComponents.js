@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { Button } from 'reactstrap'
 
 export const MainContainer = styled.div`
 background-attachment: fixed;
@@ -34,7 +35,7 @@ align-items: center;
 justify-content: center;
 `;
 
-export const MainButton = styled.button`
+export const MainButton = styled(Button)`
 width: 33.33%;
 height: 45px;
 margin: 15px 0;
@@ -45,13 +46,28 @@ background-color: RGB(130, 40, 167);
 font-size: 12px;
 `;
 
-export const PostButton = styled.button`
-    padding: 10px 20px;
-    border: none;
-    color: white;
-    font-size: 13px;
-    font-weight: bold;
-    font-color: white;
-    border-radius: 5px;
-    background-color: #ef5b5b;
+export const TitleInput = styled.input`
+    width: 100%;
+    height: 40px;
+    margin: 8px 0;
+    border: 1px solid grey;
+    border-radius: 3px;
+    padding-left: 10px;
+    ::placeholder {
+        color: grey;
+        font-size: 15px;
+    }
+`;
+
+export const ContentArea = styled.textarea`
+    width: 100%;
+    height: 70px;
+    margin: 8px 0;
+    border: 1px solid grey;
+    border-radius: 3px;
+    padding-left: 10px;
+    ::placeholder {
+        color: grey;
+        font-size: 15px;
+    }
 `;

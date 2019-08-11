@@ -5,13 +5,13 @@ import { withRouter } from 'react-router'
 import { Link } from "react-router-dom"
 import { Navbar, Nav, NavItem } from "react-bootstrap"
 import { LinkContainer } from 'react-router-bootstrap'
-import { PostButton } from '../components/MainComponents'
 import { logout } from "../actions/api"
+import AddPost from "./addPost";
 
 class Header extends React.Component {
   static propTypes = {
     user: PropTypes.string,
-    logout: PropTypes.func
+    logout: PropTypes.func,
   }
 
   componentWillMount() {
@@ -30,6 +30,7 @@ class Header extends React.Component {
     <Nav pullRight bsStyle="pills">
       {/*<IndexLinkContainer to="/users" activeClassName="active"><NavItem>Users</NavItem></IndexLinkContainer>*/}
       {/*<LinkContainer to="/meals" activeClassName="active"><NavItem>Meals</NavItem></LinkContainer>*/}
+      <AddPost style={{display: 'inline'}}/>
       <LinkContainer to="/login"><NavItem onClick={this.logout} >Logout</NavItem></LinkContainer>
     </Nav>
     )
@@ -43,6 +44,7 @@ class Header extends React.Component {
       </Nav>
     )
   }
+
   render() {
     const { user } = this.props
     return (
@@ -56,7 +58,6 @@ class Header extends React.Component {
             </Navbar.Brand>
             <Navbar.Toggle />
           </Navbar.Header>
-          <PostButton>Add Listing</PostButton>
           <Navbar.Collapse>
             { user ? this.renderNavButtons() : this.renderNonUserButtons()}
           </Navbar.Collapse>

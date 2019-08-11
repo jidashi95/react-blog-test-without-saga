@@ -6,6 +6,7 @@ import Signup from './containers/signup'
 import Header from './containers/header'
 import Users from './containers/users'
 import Posts from './containers/posts'
+import PostDetail from './containers/postDetail';
 
 
 export default (
@@ -16,6 +17,7 @@ export default (
   <Route path="/login" component={Login} />
   <Route path="/register" component={Signup} />
   <AuthRoute path="/users" component={Users} />
+  <Route path="/posts/:id" component={PostDetail} />
   <AuthRoute path="/posts" component={Posts} />
   </Switch>
   </div>

@@ -45,7 +45,6 @@ class Login extends Component {
     return login(values).then( res => {
         history.push('/posts')
     }).catch(res => {
-      console.log(res);
       this.setState({errors: ["Wrong email or password"] })
     })
   }

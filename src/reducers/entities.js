@@ -16,7 +16,6 @@ const entities = (state = {}, action) => {
         
         switch (action.type) {
             case types.LOG_IN:
-                console.log( "login success ", action )
                 return {
                     ...state,
                     user: action.body.email,
@@ -34,10 +33,30 @@ const entities = (state = {}, action) => {
                     usersData: action.response
                 }
             case types.GET_POSTS:
-                console.log("+++", action)
                 return {
                     ...state,
                     postsData: action.response
+                }
+            case types.GET_POST:
+                return {
+                    ...state,
+                    postData: action.response
+                }
+            case types.CREATE_POST:
+                state.postsData.push( action.body )
+                return {
+                    ...state,
+                }
+            case types.CREATE_COMMENTS:
+                console.log( "comments received", action )
+                return {
+                    ...state,
+                }
+            case types.GET_COMMENTS:
+                console.log("get comments success", action.response)
+                return {
+                    ...state,
+                    commentsData: action.response
                 }
             default:
               return state
