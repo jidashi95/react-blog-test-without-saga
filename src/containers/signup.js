@@ -77,7 +77,7 @@ class Signup extends Component {
     const { errors } = this.state
 
     return (
-      <MainContainer>
+      <MainContainer style={{backgroundImage: 'url("logo.jpg")'}}>
         <MainWidget>
           <Form onSubmit={handleSubmit(this.submit)}>
             <MainHeader>
@@ -89,7 +89,8 @@ class Signup extends Component {
               name="email" 
               value={this.state.email}
               onChange={this.handleEmailChange}
-              placeholder="EmailAddress"/>
+              placeholder="EmailAddress"
+              validate={[isRequired, isValidEmail]}/>
             </div>
             <div className="InputContainerS">
               <input 

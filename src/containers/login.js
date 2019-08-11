@@ -4,7 +4,6 @@ import { compose } from "redux"
 import { connect } from "react-redux"
 import { reduxForm } from "redux-form"
 import { Form } from "react-bootstrap"
-import { Link } from "react-router-dom"
 import { withRouter } from "react-router"
 import ErrorAlert from "../components/errorAlert"
 import { login } from "../actions/api"
@@ -43,20 +42,20 @@ class Login extends Component {
       password: password
     }
 
-    console.log("+++++", values);
     return login(values).then( res => {
-        history.push('/users')
+        history.push('/posts')
     }).catch(res => {
+      console.log(res);
       this.setState({errors: ["Wrong email or password"] })
     })
   }
 
   render() {
-    const { handleSubmit, history } = this.props
+    const { handleSubmit } = this.props
     const { errors } = this.state
 
     return (
-      <MainContainer>
+      <MainContainer style={{backgroundImage: 'url("logo.jpg")'}}>
         <MainWidget>
         <Form onSubmit={handleSubmit(this.submit)}>
           <MainHeader>

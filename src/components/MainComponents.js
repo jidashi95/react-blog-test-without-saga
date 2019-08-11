@@ -1,6 +1,10 @@
 import styled from 'styled-components'
 
 export const MainContainer = styled.div`
+background-attachment: fixed;
+background-position: center;
+background-size: cover;
+margin-top: -70px;
 display: flex;
 flex-direction: column;
 align-items: center;
@@ -39,4 +43,15 @@ border-radius: 3px;
 color: white;
 background-color: RGB(130, 40, 167);
 font-size: 12px;
+`;
+
+export const PostButton = styled.button`
+    padding: 10px 20px;
+    border: none;
+    color: white;
+    font-size: 13px;
+    font-weight: bold;
+    font-color: white;
+    border-radius: 5px;
+    background-color: #ef5b5b;
 `;
