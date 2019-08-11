@@ -1,21 +1,23 @@
 import React, { Component } from "react";
 import Post from "./post";
 import PropTypes from 'prop-types'
-import { getPosts } from '../actions/api'
+import { getPosts, getPost } from '../actions/api'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
+import { PostButton, PostUnit } from '../components/PostComponents'
 
 class Posts extends Component {
     constructor(props) {
         super(props)
         this.state = {
-
         }
     }
 
     static propsTypes = {
         getPosts: PropTypes.func,
+        getPost: PropTypes.func,
+        history: PropTypes.object
     }
 
     componentWillMount() {
@@ -23,9 +25,17 @@ class Posts extends Component {
       getPosts()
     }
 
+    readPostMore = (id) => {
+        const { history, getPost } = this.props
+
+        getPost( id ).then( res => {
+            history.push(`/posts/${id}`)
+        })
+    }
+
     renderPosts = () => {
         const { postsData } = this.props;
-        console.log("PostData++", postsData)
+        console.log( postsData )
         if ( !postsData || !postsData.length ) {
             return (
                 <div>
@@ -34,11 +44,18 @@ class Posts extends Component {
             )
         }
         return (
-        postsData.map((post, id) => (
-            <Post key={id} 
-            title={post.title}
-            content={post.content}
-            created_at={post.created_at} />
+        postsData.map((post) => (
+            <PostUnit key={post.id}>
+                <Post 
+                id={post.id} 
+                title={post.title}
+                content={post.content}
+                created_at={post.created_at}
+                showFlag={false} />
+                <PostButton onClick={() => this.readPostMore(post.id)}>
+                    READ MORE
+                </PostButton>
+            </PostUnit>
         )))
     }
 
@@ -54,6 +71,7 @@ class Posts extends Component {
 
 const mapDispatchToProps = {
     getPosts,
+    getPost,
 }
 
 const mapStateToProps = (state) => ({

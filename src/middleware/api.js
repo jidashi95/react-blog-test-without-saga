@@ -13,9 +13,12 @@ export default store => next => action => {
     let auth = state.entities.auth;;
 
     if (!path || !method || !type) {
+        console.log("path", path)
+        console.log("method", method)
+        console.log("type", type)
         console.log("error")
         throw new Error('Specify a path, method and type.')
-    }
+    }    
     
 
     if (typeof path === 'function') {

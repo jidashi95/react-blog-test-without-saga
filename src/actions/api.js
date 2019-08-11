@@ -43,9 +43,21 @@ export const getPosts = () => ({
   path: '/posts'
 })
 
-export const leaveComments = (id, body) => ({
+export const getPost = (id) => ({
+  type: types.GET_POST,
+  method: 'GET',
+  path: `/posts/${id}`
+})
+
+export const getComments = (id) => ({
+  type: types.GET_COMMENTS,
+  method: 'GET',
+  path: `/posts/${id}/comments`
+})
+
+export const leaveComment = (id, body) => ({
   type: types.CREATE_COMMENTS,
   method: 'POST',
-  paht: `posts/${id}/comments`,
+  path: `/posts/${id}/comments`,
   body
 })
