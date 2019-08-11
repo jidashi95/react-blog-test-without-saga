@@ -8,10 +8,7 @@ Technical review
 
 Incosistent letter case 
 
-
-const MainContainer = styled.div`
-background-image: url('/logo.jpg');
-min-height: 100vh;
-margin-top: -72px;
-padding-top: 72px;
-`;
+- Routes:
+* / Redirect
+* login Redirec
+t

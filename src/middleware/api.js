@@ -10,14 +10,13 @@ export default store => next => action => {
     let { path } = action;
     const { method, type, body, isMultipartUpload } = action;
     const state = store.getState();
-    let auth = {};
-    if (localStorage.getItem('auth')) {
-        auth = JSON.parse(localStorage.getItem('auth'));
-    }
+    let auth = state.entities.auth;;
 
     if (!path || !method || !type) {
+        console.log("error")
         throw new Error('Specify a path, method and type.')
     }
+    
 
     if (typeof path === 'function') {
         path = path(state);
@@ -30,7 +29,7 @@ export default store => next => action => {
     next({...action, status: 'REQUESTED' });
 
     // make the request
-    return makeRequest(method, path, body, auth, isMultipartUpload)
+    return makeRequest(method, path, body, {'Authorization' : auth}, isMultipartUpload)
         .then(({headers, response}) => {
             store.dispatch({...action, headers, response, status: 'COMPLETE' });
             return Promise.resolve(response);
@@ -47,10 +46,14 @@ export const makeRequest = (method, url, data, headers, isMultipartUpload) => {
         params = data
         data = {}
     }
+    console.log(params, data, headers, url);
+    
     return axios({method, url, data, params, headers}).then(response => {
         const {headers, data} = response;
+        console.log("func")
         return Promise.resolve({headers, response:data});
     }).catch(error => {
+        console.log(error)
         switch(error.response.status) {
             case 401:
                 localStorage.removeItem('auth');
@@ -59,6 +62,7 @@ export const makeRequest = (method, url, data, headers, isMultipartUpload) => {
             default:
                 break;
         }
+        
         return Promise.reject(error.response.data)
     })
 }

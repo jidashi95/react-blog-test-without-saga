@@ -49,7 +49,7 @@ class Users extends Component {
               <thead>
                 <tr>
                   <th>Email</th>
-                  <th onClick={() => this.sortUser(2)} ><span>{createdAtTitle}</span></th>
+                  <th style={{cursor: 'pointer'}} onClick={() => this.sortUser(2)} >{createdAtTitle}</th>
                 </tr>
               </thead>
               <tbody>

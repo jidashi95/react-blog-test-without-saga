@@ -9,9 +9,12 @@ export default store => next => action => {
 
     if( action.type === types.LOG_IN && action.status === 'COMPLETE' 
       && action.response ) {
+      localStorage.setItem('auth', action.response.auth_token)
+      localStorage.setItem('user', action.body.email)
+    }
 
-      localStorage.setItem('auth', JSON.stringify(action.headers));
-      localStorage.setItem('user', JSON.stringify(action.response.auth_token))
+    if(action.type === types.GET_POSTS) {
+      console.log("+++++++", action)
     }
 
     if(action.type === types.LOG_OUT) {

@@ -5,11 +5,12 @@ import { withRouter } from 'react-router'
 import { Link } from "react-router-dom"
 import { Navbar, Nav, NavItem } from "react-bootstrap"
 import { LinkContainer } from 'react-router-bootstrap'
+import { PostButton } from '../components/MainComponents'
 import { logout } from "../actions/api"
 
 class Header extends React.Component {
   static propTypes = {
-    auth: PropTypes.object,
+    user: PropTypes.string,
     logout: PropTypes.func
   }
 
@@ -51,10 +52,11 @@ class Header extends React.Component {
         border: 'none' }}>
           <Navbar.Header>
             <Navbar.Brand>
-              <Link to="/">User Management</Link>
+              <Link to="/users">User Management</Link>
             </Navbar.Brand>
             <Navbar.Toggle />
           </Navbar.Header>
+          <PostButton>Add Listing</PostButton>
           <Navbar.Collapse>
             { user ? this.renderNavButtons() : this.renderNonUserButtons()}
           </Navbar.Collapse>
