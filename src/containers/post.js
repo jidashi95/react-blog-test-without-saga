@@ -12,12 +12,10 @@ class Post extends Component {
 
     constructor(props) {
         super(props)
-        let imgNumber = Math.random() * 10;
-        imgNumber = Math.floor(imgNumber);
-        imgNumber = imgNumber % 3 + 1;
+        const { id } = this.props
         this.state = {
             showFlag: false,
-            article_img: `/pics/post${imgNumber}.jpg`,
+            article_img: `/pics/post${id % 3 + 1}.jpg`,
         }
     }
 

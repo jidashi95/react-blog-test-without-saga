@@ -5,13 +5,9 @@ import { Row, Col } from "react-bootstrap"
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { getComments } from '../actions/api'
+import { ContainerTitle } from '../components/MainComponents'
 import dateFormat from 'dateformat'
-
-const ContainerTitle = styled.div`
-    font-size: 15px;
-    font-weight: bold;
-
-`;
+import Time from 'react-time-format'
 
 const CommentUnit = styled.div`
     width: 100%;
@@ -25,26 +21,43 @@ const AuthorImage = styled.div`
     height: 70px;
 `;
 
-const CommentContainer = styled.div`
+const CommentContentContainer = styled.div`
     width: 100%;
     height: 100%;
 `;
 
-const AuthorName = styled.span`
-    font-size: 15px;
-    font-weight: bold;
-`;
-
-const CreatedInfo = styled.div`
-    margin: 15px 0;
-`;
-
 const CommentText = styled.span`
+    word-wrap: break-word;
     font-size: 15px;
     font-style: italic;
     font-weight: light;
     color: grey;
 `;
+
+const CreatedInfoContainer = styled.div`
+    margin: 15px 0;
+    font-weight: light;
+    font-size: 15px;
+    color: grey;
+`;
+
+const AuthorName = styled.span`
+    font-size: 15px;
+    font-weight: bold;
+    color: black;
+`;
+
+const CreatedInfo = styled.span`
+    font-style: italic;
+    margin: 0 20px;
+`;
+
+const CommentContainer = styled.div`
+    width: 100%;
+    margin: 60px 0px;
+`;
+
+
 
 class Comments extends Component {
 
@@ -63,22 +76,20 @@ class Comments extends Component {
     componentWillMount() {
         const { getComments } = this.props;
         const { id } = this.props;
-        console.log("post id herer", id)
         getComments( id )
     }
 
     render() {
         const { commentsData } = this.props;
-        console.log("here is commnetDAta", commentsData)
         if ( !commentsData || !commentsData.length ) {
             return (
                 <div>
-                    No posts to display.
+                    No Comments to display.
                 </div>
             )
         }
         return (
-            <div>
+            <CommentContainer>
             <ContainerTitle>
                 Comments ({commentsData.length})
             </ContainerTitle>
@@ -93,25 +104,23 @@ class Comments extends Component {
                             </AuthorImage>
                         </Col>
                         <Col xs={9} style={{ paddingLeft: '8px' }}>
-                            <CommentContainer>
-                                <CreatedInfo>
+                            <CommentContentContainer>
+                                <CreatedInfoContainer>
                                     <AuthorName>
                                         {comment.name}
                                     </AuthorName>
-                                    <CommentText>
-                                        {`  ${dateFormat(comment.created_at, "hh:mm a")}   |   
-                                        ${dateFormat(comment.created_at, "mmm dd, yyyy")}`}
-                                    </CommentText>
-                                </CreatedInfo>
+                                    <CreatedInfo><Time value={comment.created_at} format="hh:mm"/></CreatedInfo>|
+                                    <CreatedInfo>{dateFormat(comment.created_at, "mmm dd, yyyy")}</CreatedInfo>
+                                </CreatedInfoContainer>
                                 "<CommentText>
                                     {comment.message}
                                 </CommentText>"
-                            </CommentContainer>
+                            </CommentContentContainer>
                         </Col>
                     </Row>
                 </CommentUnit>
             ))}
-            </div>
+            </CommentContainer>
         )
     }
 }

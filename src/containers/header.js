@@ -6,7 +6,6 @@ import { Link } from "react-router-dom"
 import { Navbar, Nav, NavItem } from "react-bootstrap"
 import { LinkContainer } from 'react-router-bootstrap'
 import { logout } from "../actions/api"
-import AddPost from "./addPost";
 
 class Header extends React.Component {
   static propTypes = {
@@ -30,7 +29,6 @@ class Header extends React.Component {
     <Nav pullRight bsStyle="pills">
       {/*<IndexLinkContainer to="/users" activeClassName="active"><NavItem>Users</NavItem></IndexLinkContainer>*/}
       {/*<LinkContainer to="/meals" activeClassName="active"><NavItem>Meals</NavItem></LinkContainer>*/}
-      <AddPost style={{display: 'inline'}}/>
       <LinkContainer to="/login"><NavItem onClick={this.logout} >Logout</NavItem></LinkContainer>
     </Nav>
     )
@@ -54,7 +52,10 @@ class Header extends React.Component {
         border: 'none' }}>
           <Navbar.Header>
             <Navbar.Brand>
-              <Link to="/users">User Management</Link>
+              <Link to="/users">users</Link>
+            </Navbar.Brand>
+            <Navbar.Brand>
+              <Link to="/posts">posts</Link>
             </Navbar.Brand>
             <Navbar.Toggle />
           </Navbar.Header>

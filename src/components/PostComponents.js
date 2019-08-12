@@ -34,6 +34,7 @@ color: grey;
 font-weight: bold;
 font-size: 15px;
 text-align: justfy;
+word-wrap: break-word;
 margin: 15px 0;
 `;
 
@@ -42,12 +43,13 @@ width: 100%;
 `;
 
 export const PostButton = styled(Button)`
-    padding: 10px 20px;
-    border: none;
-    color: white;
-    font-size: 13px;
-    font-weight: bold;
-    font-color: white;
-    background-color: #ef5b5b;
-    min-width: 120px;
+padding: 10px 20px;
+margin: 10px 0;
+border: none;
+color: white;
+font-size: 13px;
+font-weight: bold;
+font-color: white;
+background-color: #ef5b5b;
+min-width: 120px;
 `;
