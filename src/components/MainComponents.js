@@ -1,6 +1,18 @@
 import styled from 'styled-components'
 import { Button } from 'reactstrap'
 
+export const ContainerTitle = styled.div`
+    font-size: 15px;
+    font-weight: bold;
+    ::before {
+        content: '|';
+        color: red;
+        font-weight: bold;
+        text-shadow: 2px 0;
+        padding-right: 15px;
+    }
+`;
+
 export const MainContainer = styled.div`
 background-attachment: fixed;
 background-position: center;

@@ -9,7 +9,7 @@ import { TitleInput, ContentArea } from '../components/MainComponents'
 import { PostButton,
         PostUnit,
         CommentWidget } from '../components/PostComponents'
-import { getPost, getComments, leaveComment } from '../actions/api'
+import { getPost, leaveComment, getComments } from '../actions/api'
 import Comments from './comments'
 
 class PostDetail extends Component {
@@ -17,8 +17,8 @@ class PostDetail extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            name: '',
-            message: '',
+            name: null,
+            message: null,
         }
     }
 
@@ -35,14 +35,17 @@ class PostDetail extends Component {
     }
 
     onLeaveComments = (id) => {
-        const { leaveComment } = this.props;
+        const { leaveComment, getComments } = this.props;
         const { name, message } = this.state;
         const values = {
             name: name,
             message: message,
         }
         console.log("???", id, values)
-        leaveComment(id, values)
+        leaveComment(id, values).then( res => {
+            getComments( id )
+        })
+        this.setState({ name: '', message: '' })
     }
 
     onNameChange = (e) => {
@@ -76,10 +79,10 @@ class PostDetail extends Component {
                 showFlag={true}/>
                 <CommentWidget>
                     <Row>
-                        <Col xs={6} style={{ paddingRight: '8px' }}><TitleInput placeholder="Name" onChange={this.onNameChange} name="name" /></Col>
-                        <Col xs={6} style={{ paddingLeft: '8px' }}><TitleInput placeholder="Email" name="email" /></Col>
+                        <Col xs={6} style={{ paddingRight: '8px' }}>
+                            <TitleInput placeholder="Name" onChange={this.onNameChange} name="name" />
+                        </Col>
                     </Row>
-                    <TitleInput placeholder="Title" name="title" />
                     <ContentArea placeholder="Message" onChange={this.onMessageChange} name="message" />
                 </CommentWidget>
                 <PostButton onClick={() => this.onLeaveComments(id)}>Leave Comment</PostButton>
@@ -93,6 +96,7 @@ class PostDetail extends Component {
 const mapDispatchToProps = {
   leaveComment,
   getPost,
+  getComments,
 }
 
 const mapStateToProps = (state) => ({

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import { compose } from "redux"
 import { connect } from 'react-redux'
 import { Button } from 'reactstrap'
-import { createPost } from '../actions/api'
+import { createPost, getPosts } from '../actions/api'
 import { TitleInput, ContentArea } from '../components/MainComponents'
 import { PostButton } from '../components/PostComponents'
 
@@ -106,7 +106,8 @@ class AddPost extends React.Component {
   }
 
   static propsTypes = {
-    createPost: PropTypes.func
+    createPost: PropTypes.func,
+    getPosts: PropTypes.func,
   };
 
   openModal() {
@@ -131,19 +132,17 @@ class AddPost extends React.Component {
   }
 
   addNewPost = () => {
-    const { createPost } = this.props;
+    const { createPost, getPosts } = this.props;
     const { title, content } = this.state;
     const values = { 
       title: title,
       content: content
     };
 
-    createPost(values)
-    // .then( res => {
-    //   alert("Success!")
-    // }).catch( res => {
-    //   alert("fail")
-    // })
+    createPost(values).then( res => {
+      getPosts();
+      this.setState({ modalIsOpen: false });
+    })
   }
 
   render() {
@@ -181,6 +180,7 @@ class AddPost extends React.Component {
 
 const mapDispatchToProps = {
   createPost,
+  getPosts,
 }
 
 export default compose(
