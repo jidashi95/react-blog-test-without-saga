@@ -7,6 +7,11 @@ import { PostDetails,
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCalendar} from '@fortawesome/free-solid-svg-icons'
 import dateFormat from 'dateformat'
+import styled from 'styled-components'
+
+const PostDataUnit = styled.div`
+    width: 100%;
+`;
 
 class Post extends Component {
 
@@ -49,7 +54,7 @@ class Post extends Component {
         const { title } = this.props;
         const { article_img } = this.state;
         return (            
-            <div>
+            <PostDataUnit>
                 <PostImage>
                     <img src={article_img}
                         style={{ width: '100%', height: '100%' }}
@@ -66,7 +71,7 @@ class Post extends Component {
                         {this.getPostContent()}
                     </PostContent>
                 </PostText>
-            </div>            
+            </PostDataUnit>            
         )
     }
 }

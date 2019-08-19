@@ -8,8 +8,8 @@ import { withRouter } from 'react-router'
 import { PostButton, PostUnit } from '../components/PostComponents'
 import { Row, Col } from 'react-bootstrap'
 import { ContainerTitle } from "../components/MainComponents";
-import { Button } from 'reactstrap'
 import { orderBy } from 'lodash'
+import { Button } from 'reactstrap'
 import styled from 'styled-components'
 import DatePicker from "react-datepicker";
 import AddPost from "./addPost";
@@ -40,16 +40,8 @@ const PostViewContainer = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-`;
-
-const SortButton = styled(Button)`
-    width: 100%;
-    text-align: center;
-    font-size: 15px;
-    font-weight: bold;
-    border: 1px solid #ef5b5b;
-    color: black;
-    background-color: white;
+    max-width: 1200px;
+    margin: auto;
 `;
 
 const ControlUnitContailer = styled.div`
@@ -57,12 +49,48 @@ const ControlUnitContailer = styled.div`
     margin 25px 0px;
 `;
 
-const DatePickContainer = styled.div`
+const DatePickerLabel = styled.div`
     width: 100%;
     color: black;
     font-size: 15px;
     font-weight: bold;
     margin: 10px 0;
+`;
+
+const DatePickContainer = styled(DatePicker)`
+    width: 100%;
+    color: black;
+    font-size: 15px;
+    margin: 10px 0;
+    & > input {
+        width: 100%;
+    }
+`;
+
+const NewestSortButton = styled(Button)`
+padding: 10px 20px;
+margin: 10px 0;
+border: 1px solid #ef5b5b;
+border-top-right-radius: 1px 1px;
+border-bottom-right-radius: 1px 1px;
+color: white;
+font-size: 13px;
+font-weight: bold;
+font-color: white;
+background-color: #ef5b5b;
+`;
+
+const OldestSortButton = styled(Button)`
+padding: 10px 20px;
+margin: 10px 0;
+border: 1px solid #ef5b5b;
+border-top-left-radius: 1px 1px;
+border-bottom-left-radius: 1px 1px;
+color: white;
+font-size: 13px;
+font-weight: bold;
+font-color: white;
+background-color: #ef5b5b;
 `;
 
 class Posts extends Component {
@@ -112,7 +140,6 @@ class Posts extends Component {
     }
 
     filterPost = () => {
-        const { startDate, endDate } = this.state;
         this.setState({ filterFlag: true })
     }
 
@@ -152,7 +179,6 @@ class Posts extends Component {
     }
 
     render() {
-        const { sortOrder } = this.state
         return(
             <PostViewContainer>
                 <Row>
@@ -170,16 +196,18 @@ class Posts extends Component {
                             <ControlUnitContainer>
                                 <ContainerTitle>Filter Using Range</ContainerTitle>
                                 <ControlUnitContailer>
-                                    <DatePickContainer>
-                                    Start Date: <DatePicker
+                                    <DatePickerLabel>
+                                        Start Date:
+                                    </DatePickerLabel>
+                                    <DatePickContainer
                                     selected={this.state.startDate}
                                     onChange={this.onStartDateChange}/>
-                                    </DatePickContainer>
-                                    <DatePickContainer>
-                                    End Date: <DatePicker
+                                    <DatePickerLabel>
+                                        End Date:
+                                    </DatePickerLabel>
+                                    <DatePickContainer
                                     selected={this.state.endDate}
                                     onChange={this.onEndDateChange}/>
-                                    </DatePickContainer>
                                     <PostButton onClick={this.filterPost}>Filter</PostButton>
                                 </ControlUnitContailer>
                             </ControlUnitContainer>
@@ -188,18 +216,19 @@ class Posts extends Component {
                                 <ControlUnitContailer>
                                     <Row>
                                         <Col xs={6} style={{ paddingRight: '0px' }}>
-                                            <PostButton 
-                                            color={sortOrder === 0 ? 'danger' : 'white'  }
+                                            <NewestSortButton 
+                                            color={this.state.sortOrder && "white"}
+                                            style={{width: '100%'}}
                                             onClick={this.sortPostNewst}>
                                                 Newest
-                                            </PostButton>
+                                            </NewestSortButton>
                                         </Col>
                                         <Col xs={6} style={{ paddingLeft: '0px' }}>
-                                            <PostButton
-                                            color={sortOrder === 1 ? 'danger' : 'white'  }
+                                            <OldestSortButton
+                                            style={{width: '100%'}}
                                             onClick={this.sortPostOldest}>
                                                 Oldest
-                                            </PostButton>
+                                            </OldestSortButton>
                                         </Col>
                                     </Row>
                                 </ControlUnitContailer>
