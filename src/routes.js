@@ -16,9 +16,9 @@ export default (
   <Switch>
   <Route path="/login" component={Login} />
   <Route path="/register" component={Signup} />
-  <AuthRoute path="/users" component={Users} />
+  <Route path="/users" component={Users} />
   <Route path="/posts/:id" component={PostDetail} />
-  <AuthRoute path="/posts" component={Posts} />
+  <Route path="/posts" component={Posts} />
   </Switch>
   </div>
   </Router>

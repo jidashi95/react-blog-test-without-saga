@@ -13,10 +13,6 @@ class Header extends React.Component {
     logout: PropTypes.func,
   }
 
-  componentWillMount() {
-
-  }
-
   logout = (e) => {
     const { logout } = this.props
     logout()
@@ -46,7 +42,7 @@ class Header extends React.Component {
   render() {
     const { user } = this.props
     return (
-      <div>
+      <div style={{top: '0px', position: 'sticky'}}>
         <Navbar collapseOnSelect fluid
         style={{ backgroundColor: 'transparent',
         border: 'none' }}>

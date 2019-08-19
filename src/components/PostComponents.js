@@ -3,12 +3,12 @@ import { Button } from 'reactstrap'
 import styled from 'styled-components'
 
 export const PostUnit = styled.div`
-margin: 10px auto;
-max-width: 500px;
+margin-right: 10px;
+margin-bottom: 10px;
+width: 500px;
 `;
 
 export const PostImage = styled.div`
-position: relative;
 widht: 500px;
 height: 250px;
 `;
